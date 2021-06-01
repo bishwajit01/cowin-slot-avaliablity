@@ -47,7 +47,7 @@ while True:
                                     if min_age < 40 and doseCapacity != 0 :
                                         print('----------------URBAN------------------')
                                         print(item['pincode'], ' ' , item['available_capacity'])
-                                        os.system('say "Book it fast!!!!!!!!"')
+                                        os.system('say "Slot Available. Book it fast!!!!!!!!"')
                             if districtName.find("Bangalore Rural") == 0:
                                 # print(districtName)
                                 queryParam = '?district_id=' + str(item['district_id']) + '&date=' + new_today_date
@@ -59,7 +59,19 @@ while True:
                                     if min_age < 40 and doseCapacity != 0:
                                         print('---------------RURAL-----------------')
                                         print(item['pincode'], ' ' , item['available_capacity_dose1'])
-                                        os.system('say "Book it fast!!!!!!!!"')
+                                        os.system('say "Slot Available. Book it fast!!!!!!!!"')
+                            if districtName.find("BBMP") == 0:
+                                # print(districtName)
+                                queryParam = '?district_id=' + str(item['district_id']) + '&date=' + new_today_date
+                                response = requests.get(BASE_URL + URL_FIND_BY_DISTRICT + queryParam, headers=header_dict)
+                                sessions = response.json()['sessions']
+                                for item in sessions:
+                                    min_age = item['min_age_limit']
+                                    doseCapacity = item['available_capacity_dose1']
+                                    if min_age < 40 and doseCapacity != 0:
+                                        print('---------------BBMP-----------------')
+                                        print(item['pincode'], ' ' , item['available_capacity_dose1'])
+                                        os.system('say "Slot Available. Book it fast!!!!!!!!"')
         count = count + 1
         time.sleep(5)
     except:
