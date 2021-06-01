@@ -22,9 +22,6 @@ URL_FIND_BY_DISTRICT = 'v2/appointment/sessions/public/findByDistrict'
 def sendMessage(message):
     message = urllib.parse.quote(message, safe='')
     print(message)
-    # message = re.sub('[:]+', '\:', message)
-    # message = re.sub('[ ]+', '\ ', message)
-    # message = re.sub('[.]+', '\.', message)
     chat_id = 'XXXX'
     token_id = 'XXXXXXX'
     send_text = 'https://api.telegram.org/bot' + token_id + '/sendMessage?chat_id=' + chat_id + \
@@ -43,11 +40,18 @@ def sendMessages(item):
     doseCapacity = item['available_capacity_dose1']
 
     address = item['address']
+    address = re.sub('[.]', ' ', address)
+    address = re.sub('[-]', ' ', address)
+    address = re.sub('[)]', ' ', address)
+    address = re.sub('[(]', ' ', address)
+
     name = item['name']
+    name = re.sub('[.]', ' ', name)
+    name = re.sub('[-]', ' ', name)
+    name = re.sub('[)]', ' ', name)
+    name = re.sub('[(]', ' ', name)
 
     if min_age == 18 and doseCapacity != 0 :
-        # print('----------------URBAN------------------')
-        # print(item['pincode'], ' ' , item['available_capacity'])
         message = 'Age Group: 18 to 44' + '\n'
         message = message + name + '\n' + address + '\n'
         message = message + 'Pincode: ' + str(item['pincode']) + '\n'
@@ -56,24 +60,6 @@ def sendMessages(item):
         message = message + 'DATE: ' + new_today_date2 + '\n'
         message = message + 'Dose1: ' + str(item['available_capacity_dose1']) + '\n'
         message = message + 'Dose2: ' + str(item['available_capacity_dose2']) + '\n'
-        # message = message + "By-Bishwajit Vikram"
-
-        print(message)
-        sendMessage(message)
-
-    # if min_age == 45 and doseCapacity != 0 :
-    #     message = 'Age Group: 45\+' + '\n'
-    #     message = message + item['name'] + '\n' + re.sub('[.]', ' ', address) + '\n'
-    #     message = message + 'Pincode: ' + str(item['pincode']) + '\n'
-    #     message = message + 'Vaccine: ' + item['vaccine'] + '\n'
-    #     message = message + 'FeeType: ' + item['fee_type'] + '\n'
-    #     message = message + 'DATE: ' + new_today_date2 + '\n'
-    #     message = message + 'Dose1: ' + str(item['available_capacity_dose1']) + '\n'
-    #     message = message + 'Dose2: ' + str(item['available_capacity_dose2']) + '\n'
-    #     # message = message + "Bishwajit Vikram"
-
-    #     print(message)
-    #     sendMessage(message)
 
 count = 0
 while True:
@@ -103,16 +89,6 @@ while True:
                                 sessions = response.json()['sessions']
                                 for item in sessions:
                                     sendMessages(item)
-                                    # min_age = item['min_age_limit']
-                                    # doseCapacity = item['available_capacity']
-                                    # if min_age < 40 and doseCapacity != 0 :
-                                    #     print('----------------URBAN------------------')
-                                    #     print(item['pincode'], ' ' , item['available_capacity'])
-                                    #     message = str(item['pincode']) + '\nSlots:' + str(item['available_capacity_dose1']) + '\n' + 'Address\:' + str(item['address'])
-                                    #     print(message)
-                                    #     # sendMessage(message)
-                                    #     sendMessages(item)
-                                    #     os.system('say "Book it fast!!!!!!!!"')
                             if districtName.find("Bangalore Rural") == 0:
                                 # print(districtName)
                                 queryParam = '?district_id=' + str(item['district_id']) + '&date=' + new_today_date
@@ -120,16 +96,6 @@ while True:
                                 sessions = response.json()['sessions']
                                 for item in sessions:
                                     sendMessages(item)
-                                    # min_age = item['min_age_limit']
-                                    # doseCapacity = item['available_capacity_dose1']
-                                    # if min_age < 40 and doseCapacity != 0:
-                                    #     print('---------------RURAL-----------------')
-                                    #     print(item['pincode'], ' ' , item['available_capacity_dose1'])
-                                    #     message = str(item['pincode']) + '\nSlots:' + str(item['available_capacity_dose1']) + '\n' + 'Address\:' + str(item['address'])
-                                    #     print(message)
-                                    #     # sendMessage(message)
-                                    #     sendMessages(item)
-                                    #     os.system('say "Book it fast!!!!!!!!"')
                             if districtName.find("BBMP") == 0:
                                 # print(districtName)
                                 queryParam = '?district_id=' + str(item['district_id']) + '&date=' + new_today_date
@@ -137,16 +103,6 @@ while True:
                                 sessions = response.json()['sessions']
                                 for item in sessions:
                                     sendMessages(item)
-                                    # min_age = item['min_age_limit']
-                                    # doseCapacity = item['available_capacity_dose1']
-                                    # if min_age < 40 and doseCapacity != 0:
-                                    #     print('---------------BBMP-----------------')
-                                    #     print(item['pincode'], ' ' , item['available_capacity_dose1'])
-                                    #     message = str(item['pincode']) + '\nSlots:' + str(item['available_capacity_dose1']) + '\n' + 'Address\:' + str(item['address'])
-                                    #     print(message)
-                                    #     # sendMessage(message)
-                                    #     sendMessages(item)
-                                    #     os.system('say "Book it fast!!!!!!!!"')
         count = count + 1
         time.sleep(10)
     except Exception as e:
