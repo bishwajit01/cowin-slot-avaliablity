@@ -10,6 +10,7 @@ from CoWin_45_Dose1 import send45D1Messages
 from CoWin_18_Dose2 import send18D2Messages
 from CoWin_45_Dose2 import send45D2Messages
 from CoWin_45_Dose2_COVIDSHIELD import send45D2CovishieldMessages
+from CoWin_18_Dose2_COVAXIN import send18D2CovaxinMessages
 
 today_date = datetime.date.today()
 today_date = today_date + datetime.timedelta(days=1)
@@ -50,7 +51,8 @@ def sendMessage(message, chat_id):
         print("URL >> ", send_textURL)
         response = requests.get(send_textURL)
         if response.status_code != 200:
-            os.system('say "EXCEPTION"')
+            print('Exception :: ', response.json())
+            # os.system('say "EXCEPTION"')
             time.sleep(25)
         print(response.status_code)
         print(response.json())
@@ -71,16 +73,23 @@ def postMessageToChannels(item, districtId):
         for item in sessions:
             if districtId in BANGALORE_LIST:
                 sendMessage(send18D1Messages(json.dumps(item), str(new_today_date2)), CHAT_ID_BLR18D1)
+                time.sleep(1)
             if districtId in UDUPI_LIST:
                 sendMessage(send18D1Messages(json.dumps(item), str(new_today_date2)), CHAT_ID_UDU18D1)
+                time.sleep(1)
             if districtId in ERNAKULAM_LIST:
                 sendMessage(send45D2CovishieldMessages(json.dumps(item), str(new_today_date2)), CHAT_ID_ERN45D2_COVIDSHIELD)
-            # if districtId in DELHI_LIST:
-            #     sendMessage(send18D1Messages(json.dumps(item), str(new_today_date2)), CHAT_ID_DEL18D1)
+                time.sleep(1)
+            if districtId in DELHI_LIST:
+                sendMessage(send18D2CovaxinMessages(json.dumps(item), str(new_today_date2)), CHAT_ID_DEL18D2_COVAXIN)
+                sendMessage(send18D1Messages(json.dumps(item), str(new_today_date2)), CHAT_ID_DEL18D1)
+                time.sleep(1)
             if districtId in PUNE_LIST:
                 sendMessage(send18D1Messages(json.dumps(item), str(new_today_date2)), CHAT_ID_PUN18D1)
+                time.sleep(1)
             if districtId in TUMKUR_LIST:
                 sendMessage(send18D1Messages(json.dumps(item), str(new_today_date2)), CHAT_ID_TUM18D1)
+                time.sleep(1)
     else:
         print("session Response : ", sessionResponse.status_code)
         return None
