@@ -8,7 +8,7 @@ Reference from :
 | HTTP Method | API Endpoint | DESCRIPTION |
 | ------ | ------ | ------ |
 | GET | /v2/admin/location/states | API to get all the states in India |
-| GET | /v2/admin/location/district/{state_id} | API to get all the states in India |
+| GET | /v2/admin/location/district/{state_id} | API to get all the districts in a state. |
 
 ## Appointment Availability APIs
 | HTTP Method | API Endpoint| Query Parameter|DESCRIPTION |
