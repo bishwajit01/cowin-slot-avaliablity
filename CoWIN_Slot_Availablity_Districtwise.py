@@ -11,6 +11,7 @@ from CoWin_18_Dose2 import send18D2Messages
 from CoWin_45_Dose2 import send45D2Messages
 from CoWin_45_Dose2_COVIDSHIELD import send45D2CovishieldMessages
 from CoWin_18_Dose2_COVAXIN import send18D2CovaxinMessages
+from CoWin_18_Dose1_SPUTNIKV import send18D1SPUTNIKVMessages
 
 today_date = datetime.date.today()
 today_date = today_date + datetime.timedelta(days=1)
@@ -37,6 +38,7 @@ CHAT_ID_DEL18D1 = 'XXXXXX'
 CHAT_ID_ERN45D2_COVIDSHIELD = 'XXXXXX'
 CHAT_ID_PUN18D1 = 'XXXXXX'
 CHAT_ID_TUM18D1 = 'XXXXXX'
+CHAT_ID_DEL18D1_SPUTNIK = 'XXXXXX'
 TOKEN_ID = 'XXXXXX'
 
 
@@ -83,6 +85,7 @@ def postMessageToChannels(item, districtId):
             if districtId in DELHI_LIST:
                 sendMessage(send18D2CovaxinMessages(json.dumps(item), str(new_today_date2)), CHAT_ID_DEL18D2_COVAXIN)
                 sendMessage(send18D1Messages(json.dumps(item), str(new_today_date2)), CHAT_ID_DEL18D1)
+                sendMessage(send18D1SPUTNIKVMessages(json.dumps(item), str(new_today_date2)), CHAT_ID_DEL18D1_SPUTNIK)
                 time.sleep(1)
             if districtId in PUNE_LIST:
                 sendMessage(send18D1Messages(json.dumps(item), str(new_today_date2)), CHAT_ID_PUN18D1)
